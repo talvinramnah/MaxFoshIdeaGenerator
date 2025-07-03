@@ -17,9 +17,9 @@ st.markdown("""
 logging.basicConfig(filename='app_debug.log', level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
 
 # Robustness: Check for required secrets
-if "OPENAI_VECTOR_STORE_ID" not in st.secrets or "OPENAI_API_KEY" not in st.secrets:
-    st.error("Missing required secrets. Please set OPENAI_VECTOR_STORE_ID and OPENAI_API_KEY in Streamlit Cloud.")
-    logging.error("Missing required secrets.")
+if "OPENAI_API_KEY" not in st.secrets:
+    st.error("Missing required secret: OPENAI_API_KEY. Please set it in Streamlit Cloud.")
+    logging.error("Missing required secret: OPENAI_API_KEY.")
     st.stop()
 
 # User input controls (now radio buttons)
@@ -83,7 +83,7 @@ with col2:
     )
 
 # Vector store query logic
-VECTOR_STORE_ID = st.secrets["OPENAI_VECTOR_STORE_ID"]
+VECTOR_STORE_ID = "vs_6866aa446308819187b81e38daa71954"
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 openai.api_key = OPENAI_API_KEY
