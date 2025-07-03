@@ -119,10 +119,12 @@ def fetch_vector_examples(video_type, mates):
 def fetch_fallback_examples():
     try:
         if not os.path.isdir(FALLBACK_DIR):
+            st.error(f"Fallback directory {FALLBACK_DIR} does not exist.")
             logging.error(f"Fallback directory {FALLBACK_DIR} does not exist.")
             return None
         files = [f for f in os.listdir(FALLBACK_DIR) if f.endswith('.json')]
         if len(files) < 3:
+            st.error(f"Not enough fallback files in {FALLBACK_DIR}. Found: {len(files)}")
             logging.error(f"Not enough fallback files in {FALLBACK_DIR}.")
             return None
         chosen = random.sample(files, 3)
@@ -140,6 +142,7 @@ def fetch_fallback_examples():
         logging.info(f"Loaded {len(examples)} fallback examples.")
         return examples
     except Exception as e:
+        st.error(f"Fallback example loading failed: {e}")
         logging.error(f"Fallback example loading failed: {e}")
         return None
 
@@ -231,6 +234,7 @@ if st.session_state['loading']:
                     st.session_state['examples'] = None
                     st.session_state['error'] = True
                     logging.error("No examples available from vector store or fallback.")
+                    st.error("No examples available from vector store or fallback.")
             # Build LLM prompt if examples available
             if st.session_state['examples']:
                 st.session_state['llm_prompt'] = build_llm_prompt(
@@ -247,6 +251,7 @@ if st.session_state['loading']:
                     st.session_state['parsed_idea'] = None
                     st.session_state['error'] = True
                     logging.error("LLM call failed.")
+                    st.error("LLM call failed.")
         except Exception as e:
             st.session_state['examples'] = None
             st.session_state['llm_prompt'] = None
@@ -254,10 +259,12 @@ if st.session_state['loading']:
             st.session_state['parsed_idea'] = None
             st.session_state['error'] = True
             logging.error(f"Exception in generation flow: {e}")
+            st.error(f"Exception in generation flow: {e}")
         st.session_state['loading'] = False
 
 if st.session_state['error']:
     st.error("Try again")
+    st.write("Debug info:", st.session_state)
     logging.info("Displayed 'Try again' to user.")
 
 # Display the generated idea in card format
