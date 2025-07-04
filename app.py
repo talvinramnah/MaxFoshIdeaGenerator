@@ -6,7 +6,7 @@ import random
 import json
 import re
 import logging
-
+st.write("Streamlit version:", st.__version__)
 st.set_page_config(page_title="Max Fosh Silly Video Idea Generator", layout="centered")
 
 # Inject Caveat font globally
