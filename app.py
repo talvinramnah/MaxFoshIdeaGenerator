@@ -91,6 +91,17 @@ openai.api_key = OPENAI_API_KEY
 
 FALLBACK_DIR = "maxfosh_summaries"
 
+spinner_phrases = [
+    'shredding yellow card',
+    'setting up lemonade stand',
+    'winning oscar',
+    'buying roundabout',
+    'signing a will',
+    'performing at apollo',
+    'breaking into security convention',
+    'talking to parrot',
+    'gambling with horse'
+]
 
 def fetch_vector_examples(video_type):
     query = f"Max Fosh-style video, type: {video_type}"
@@ -213,7 +224,8 @@ def parse_llm_response(response):
         return {"title": "", "description": ""}
 
 if st.session_state['loading']:
-    with st.spinner('Generating your idea...'):
+    spinner_text = random.choice(spinner_phrases)
+    with st.spinner(spinner_text):
         try:
             logging.info("--- Generation flow started ---")
             examples = fetch_vector_examples(video_type)
