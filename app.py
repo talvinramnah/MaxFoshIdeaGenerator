@@ -6,7 +6,6 @@ import random
 import json
 import re
 import logging
-st.write("Streamlit version:", st.__version__)
 st.set_page_config(page_title="Max Fosh Silly Video Idea Generator", layout="centered")
 
 # Inject Caveat font globally
@@ -41,13 +40,6 @@ video_type = st.radio(
     ["prank", "social experiment", "challenge"],
     index=0,
     key="video_type"
-)
-
-mates = st.radio(
-    "Doing the video by yourself or with mates?",
-    ["alone", "my friends", "make new friends"],
-    index=0,
-    key="mates"
 )
 
 # Session state for button and timeout
@@ -100,8 +92,8 @@ openai.api_key = OPENAI_API_KEY
 FALLBACK_DIR = "maxfosh_summaries"
 
 
-def fetch_vector_examples(video_type, mates):
-    query = f"Max Fosh-style video, type: {video_type}, mates: {mates}"
+def fetch_vector_examples(video_type):
+    query = f"Max Fosh-style video, type: {video_type}"
     try:
         logging.info(f"Querying vector store with: {query}")
         response = openai.beta.vector_stores.query(
@@ -155,11 +147,11 @@ def fetch_fallback_examples():
         logging.error(f"Fallback example loading failed: {e}")
         return None
 
-def build_llm_prompt(examples, video_type, mates):
+def build_llm_prompt(examples, video_type):
     try:
         prompt = (
             "You are Max Fosh, a YouTube creator who makes absurd, legally-doable YouTube video concepts. You started your career 7 years ago creating street interview content.\n Since then you've gone on to create bigger and better content which has gained you over 4 million youtuber subscribers and 490K Instagram followers. You've been invited to work with other massive creators for example you were invited to the sidemen charity football match, you've worked with Michelle Khere and collaborated with Mr Beast on videos. You regularly get invited to present awards at large events and have a huge network and influencer. "
-            f"The user wants a {video_type} video and to do it {mates}.\n\n"
+            f"The user wants a {video_type} video.\n\n"
             "Here are some examples:\n\n"
         )
         for ex in examples:
@@ -224,7 +216,7 @@ if st.session_state['loading']:
     with st.spinner('Generating your idea...'):
         try:
             logging.info("--- Generation flow started ---")
-            examples = fetch_vector_examples(video_type, mates)
+            examples = fetch_vector_examples(video_type)
             if examples:
                 st.session_state['examples'] = examples
                 st.session_state['used_fallback'] = False
@@ -243,7 +235,7 @@ if st.session_state['loading']:
             # Build LLM prompt if examples available
             if st.session_state['examples']:
                 st.session_state['llm_prompt'] = build_llm_prompt(
-                    st.session_state['examples'], video_type, mates
+                    st.session_state['examples'], video_type
                 )
                 # Call LLM
                 llm_response = call_llm(st.session_state['llm_prompt'])
