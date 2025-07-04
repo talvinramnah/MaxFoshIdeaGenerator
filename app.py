@@ -159,8 +159,7 @@ def build_llm_prompt(examples, video_type, mates):
             )
         prompt += (
             "---\n\nNow, generate a brand-new idea in the same style. Be creative, surprising, and mischievous — but realistic and legally possible.\n\n"
-            "Return in this format:\nTitle:\nDescription:\nExecution Plan:"
-            "Execution plan should be a short 3 bullet point plan of what you will do to make the video."
+            "Return in this format:\nTitle:\nDescription:"
         )
         logging.info("LLM prompt built successfully.")
         return prompt
