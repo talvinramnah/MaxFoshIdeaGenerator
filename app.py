@@ -68,6 +68,9 @@ if 'llm_response' not in st.session_state:
 if 'parsed_idea' not in st.session_state:
     st.session_state['parsed_idea'] = None
 
+# Always reset loading state on rerun so button is enabled
+if st.session_state.get('loading', False):
+    st.session_state['loading'] = False
 
 def on_button_click():
     st.session_state['loading'] = True
@@ -266,7 +269,6 @@ if st.session_state['loading']:
             st.session_state['error'] = True
             logging.error(f"Exception in generation flow: {e}")
             st.error(f"Exception in generation flow: {e}")
-        st.session_state['loading'] = False
 
 if st.session_state['error']:
     st.error("Try again")
