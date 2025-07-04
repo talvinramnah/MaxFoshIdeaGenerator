@@ -87,7 +87,7 @@ def on_button_click():
 col1, col2, col3 = st.columns([1,2,1])
 with col2:
     button = st.button(
-        "Go on then",
+        "Go on then, you silly billy",
         key="go_button",
         help="Generate a silly idea!",
         use_container_width=True,
