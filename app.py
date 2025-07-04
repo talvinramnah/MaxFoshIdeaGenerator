@@ -25,13 +25,13 @@ if "OPENAI_API_KEY" not in st.secrets:
 # User input controls (now radio buttons)
 video_type = st.radio(
     "Type of video?",
-    ["prank", "bet", "challenge"],
+    ["prank", "social experiment", "challenge"],
     index=0,
     key="video_type"
 )
 
 mates = st.radio(
-    "Mates?",
+    "Doing the video by yourself or with mates?",
     ["alone", "my friends", "make new friends"],
     index=0,
     key="mates"
@@ -160,6 +160,7 @@ def build_llm_prompt(examples, video_type, mates):
         prompt += (
             "---\n\nNow, generate a brand-new idea in the same style. Be creative, surprising, and mischievous — but realistic and legally possible.\n\n"
             "Return in this format:\nTitle:\nDescription:\nExecution Plan:"
+            "Execution plan should be a short 3 bullet point plan of what you will do to make the video."
         )
         logging.info("LLM prompt built successfully.")
         return prompt
