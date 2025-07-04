@@ -311,3 +311,26 @@ if st.session_state['parsed_idea'] and st.session_state['parsed_idea']['title']:
 #     st.code(st.session_state['llm_response'])
 
 # Placeholder for future UI elements 
+
+st.markdown(
+    """
+    <style>
+    /* Style the primary button */
+    div.stButton > button {
+        background-color: #d14b4b !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-size: 1.3em !important;
+        font-family: 'Caveat', cursive !important;
+        padding: 0.5em 2em !important;
+        transition: background 0.2s;
+    }
+    div.stButton > button:hover {
+        background-color: #b30000 !important;
+        color: #fff !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+) 
