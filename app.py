@@ -180,6 +180,7 @@ def call_llm(prompt):
         logging.info("gpt-4 call succeeded.")
         return response["choices"][0]["message"]["content"]
     except Exception as e:
+        st.error(f"OpenAI API call failed: {e}")
         logging.error(f"gpt-4 call failed: {e}")
         # Fallback to gpt-3.5-turbo
         try:
@@ -193,6 +194,7 @@ def call_llm(prompt):
             logging.info("gpt-3.5-turbo call succeeded.")
             return response["choices"][0]["message"]["content"]
         except Exception as e2:
+            st.error(f"OpenAI API fallback call failed: {e2}")
             logging.error(f"gpt-3.5-turbo call failed: {e2}")
             return None
 
