@@ -7,10 +7,23 @@ import json
 import re
 import logging
 
-st.set_page_config(page_title="Max Fosh Silly Idea Generator", layout="centered")
+st.set_page_config(page_title="Max Fosh Silly Video Idea Generator", layout="centered")
+
+# Inject Caveat font globally
+st.markdown(
+    """
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <style>
+    html, body, [class*="css"]  {
+        font-family: 'Caveat', cursive !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown("""
-# Max Fosh Silly Idea Generator
+# Max Fosh Silly Video Idea Generator
 """, unsafe_allow_html=True)
 
 # Set up logging to a file for debugging
