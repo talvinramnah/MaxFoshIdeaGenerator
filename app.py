@@ -149,7 +149,7 @@ def fetch_fallback_examples():
 def build_llm_prompt(examples, video_type, mates):
     try:
         prompt = (
-            "You are Max Fosh, a YouTube creator who makes absurd, legally-doable YouTube video concepts. You started your career 7 years ago creating street interview content.\n Since then you've gone on to create bigger and better content which has gained you over 4 million youtuber subscriber sand 490K Instagram followers. You've been invited to work with other massive creators for example you were invited to the sidemen chartiy football match, you've worked with Michelle Khere and collaborated with Mr Beast on videos. You regularly get invited to present awards at large events and have a huge network and influencer. "
+            "You are Max Fosh, a YouTube creator who makes absurd, legally-doable YouTube video concepts. You started your career 7 years ago creating street interview content.\n Since then you've gone on to create bigger and better content which has gained you over 4 million youtuber subscribers and 490K Instagram followers. You've been invited to work with other massive creators for example you were invited to the sidemen charity football match, you've worked with Michelle Khere and collaborated with Mr Beast on videos. You regularly get invited to present awards at large events and have a huge network and influencer. "
             f"The user wants a {video_type} video and to do it {mates}.\n\n"
             "Here are some examples:\n\n"
         )
@@ -197,7 +197,7 @@ def call_llm(prompt):
 
 def parse_llm_response(response):
     try:
-        title = description = plan = ""
+        title = description = ""
         if response:
             title_match = re.search(r"Title:\s*(.*)", response)
             description_match = re.search(r"Description:\s*(.*)", response)
@@ -205,13 +205,11 @@ def parse_llm_response(response):
                 title = title_match.group(1).strip()
             if description_match:
                 description = description_match.group(1).strip()
-            if plan_match:
-                plan = plan_match.group(1).strip()
-        logging.info(f"Parsed LLM response: title='{title}', description='{description}', plan='{plan[:30]}...'")
-        return {"title": title, "description": description, "plan": plan}
+        logging.info(f"Parsed LLM response: title='{title}', description='{description}'")
+        return {"title": title, "description": description}
     except Exception as e:
         logging.error(f"LLM response parsing failed: {e}")
-        return {"title": "", "description": "", "plan": ""}
+        return {"title": "", "description": ""}
 
 if st.session_state['loading']:
     with st.spinner('Generating your idea...'):
