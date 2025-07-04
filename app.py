@@ -170,29 +170,26 @@ def build_llm_prompt(examples, video_type, mates):
 # Call OpenAI completions API
 def call_llm(prompt):
     try:
-        logging.info("Calling OpenAI ChatCompletion (gpt-4)...")
-        response = openai.ChatCompletion.create(
+        client = openai.OpenAI(api_key=OPENAI_API_KEY)
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.9,
             max_tokens=512,
         )
-        logging.info("gpt-4 call succeeded.")
-        return response["choices"][0]["message"]["content"]
+        return response.choices[0].message.content
     except Exception as e:
         st.error(f"OpenAI API call failed: {e}")
         logging.error(f"gpt-4 call failed: {e}")
         # Fallback to gpt-3.5-turbo
         try:
-            logging.info("Calling OpenAI ChatCompletion (gpt-3.5-turbo)...")
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.9,
                 max_tokens=512,
             )
-            logging.info("gpt-3.5-turbo call succeeded.")
-            return response["choices"][0]["message"]["content"]
+            return response.choices[0].message.content
         except Exception as e2:
             st.error(f"OpenAI API fallback call failed: {e2}")
             logging.error(f"gpt-3.5-turbo call failed: {e2}")
