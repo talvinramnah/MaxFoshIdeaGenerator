@@ -201,7 +201,6 @@ def parse_llm_response(response):
         if response:
             title_match = re.search(r"Title:\s*(.*)", response)
             description_match = re.search(r"Description:\s*(.*)", response)
-            plan_match = re.search(r"Execution Plan:\s*([\s\S]*)", response)
             if title_match:
                 title = title_match.group(1).strip()
             if description_match:
@@ -273,7 +272,6 @@ if st.session_state['parsed_idea'] and st.session_state['parsed_idea']['title']:
         <div style='background-color:#fff3e6; border-radius:16px; padding:2em 1em; margin:2em 0; box-shadow:0 2px 8px rgba(0,0,0,0.07); text-align:center;'>
             <h2 style='color:#b30000; margin-bottom:0.5em;'>{st.session_state['parsed_idea']['title']}</h2>
             <div style='font-style:italic; font-size:1.1em; margin-bottom:1em;'>{st.session_state['parsed_idea']['description']}</div>
-            <div style='font-size:1em; text-align:left; max-width:500px; margin:0 auto;'><b>Execution Plan:</b><br>{st.session_state['parsed_idea']['plan']}</div>
         </div>
         """,
         unsafe_allow_html=True
