@@ -92,7 +92,8 @@ with col2:
         help="Generate a silly idea!",
         use_container_width=True,
         on_click=on_button_click,
-        disabled=st.session_state['loading']
+        disabled=st.session_state['loading'],
+        type="primary"
     )
 
 # Vector store query logic
