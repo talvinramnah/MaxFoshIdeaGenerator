@@ -258,7 +258,7 @@ if st.session_state['loading']:
                     logging.error("LLM call failed.")
                     st.error("LLM call failed.")
             st.session_state['loading'] = False
-            st.experimental_rerun()
+            st.rerun()
         except Exception as e:
             st.session_state['examples'] = None
             st.session_state['llm_prompt'] = None
@@ -268,7 +268,7 @@ if st.session_state['loading']:
             logging.error(f"Exception in generation flow: {e}")
             st.error(f"Exception in generation flow: {e}")
             st.session_state['loading'] = False
-            st.experimental_rerun()
+            st.rerun()
 
 if st.session_state['error']:
     st.error("Try again")
