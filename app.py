@@ -70,11 +70,7 @@ if 'parsed_idea' not in st.session_state:
 
 
 def on_button_click():
-    now = time.time()
-    if st.session_state['loading'] and now - st.session_state['last_click'] < 30:
-        return
     st.session_state['loading'] = True
-    st.session_state['last_click'] = now
     st.session_state['error'] = False
     st.session_state['examples'] = None
     st.session_state['used_fallback'] = False
